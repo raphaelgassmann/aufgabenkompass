@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# AufgabenKompass
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interaktives Webtool zur Auswahl von Aufgabentypen im berufskundlichen Unterricht. Basierend auf 7 didaktischen Dimensionen werden passende Aufgabenformate empfohlen.
 
-Currently, two official plugins are available:
+## Konzept
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Lehrpersonen stellen 7 Schieberegler ein, die jeweils eine Dimension der geplanten Aufgabe beschreiben:
 
-## React Compiler
+| Dimension | Stufen |
+|---|---|
+| Wissensart | Fakten/Deklarativ, Prozeduren, Konzepte, Metakognition |
+| Kognitiver Prozess | Reproduktion, naher Transfer, weiter Transfer, Problemlösen |
+| Wissenseinheiten | eine WE, bis zu vier WE, mehr als vier WE |
+| Offenheit | definiert/konvergent, definiert/divergent, ungenau/divergent |
+| Lebensweltbezug | kein, konstruiert, authentisch, real |
+| Sprachlogische Komplexität | niedrig, mittel, hoch |
+| Repräsentationsformen | eine, Integration, Transformation |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Auf Basis der Reglerstellung werden passende Aufgabentypen aus sechs Kategorien empfohlen: Zweck (Lern-/Leistungsaufgabe), EVTA-Modell, LUKAS-Modell, Offenheit, Transfer-Kontext und Repräsentationsform.
 
-## Expanding the ESLint configuration
+Die Zuordnungslogik basiert auf einem regelbasierten Scoring-System mit gewichteten Bedingungen. Die Gewichtungen können in den Einstellungen angepasst werden.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Theoretische Grundlagen
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **EVTA-Modell**: Einsteigen, Vertiefen, Trainieren, Anwenden
+- **LUKAS-Modell**: Nach Luthiger & Wilhelm (PH Luzern)
+- **Cognitive Load Theory**: Wissenseinheiten als Komplexitätsmass (Sweller)
+- **Vorentlastung**: Kognitiver Prozess und Repräsentationsformen (PHZH)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Entwicklung
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+Das R-Diagramm der Zuordnungslogik kann mit `Rscript scripts/generate_diagram.R` neu generiert werden (benötigt R und ggplot2).
+
+## Tech Stack
+
+React, TypeScript, Vite, Tailwind CSS, Radix UI, Lucide Icons, Vercel Analytics
+
+## Lizenz
+
+MIT
