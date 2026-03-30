@@ -2,6 +2,8 @@
 
 Interaktives Webtool zur Auswahl von Aufgabentypen im berufskundlichen Unterricht. Basierend auf 7 didaktischen Dimensionen werden passende Aufgabenformate empfohlen.
 
+**[Live Demo](https://aufgabenkompass.vercel.app)**
+
 ## Konzept
 
 Lehrpersonen stellen 7 Schieberegler ein, die jeweils eine Dimension der geplanten Aufgabe beschreiben:
