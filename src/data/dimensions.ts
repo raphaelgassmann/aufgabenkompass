@@ -7,7 +7,7 @@ export const dimensions: DimensionDef[] = [
     rightLabel: 'Wissen',
     description: 'Welche Art von Wissen wird angesprochen? Von einfachen Fakten über Abläufe (Prozeduren) und vernetzte Begriffe (Konzepte) bis hin zum Nachdenken über das eigene Lernen (Metakognition).',
     stops: [
-      { value: 0, label: 'Fakten' },
+      { value: 0, label: 'Fakten/Deklarativ' },
       { value: 1, label: 'Prozeduren' },
       { value: 2, label: 'Konzepte' },
       { value: 3, label: 'Metakognition' },
