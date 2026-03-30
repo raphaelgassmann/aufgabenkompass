@@ -2,20 +2,22 @@ import type { Rule } from '../types';
 
 export const rules: Rule[] = [
   // === ZWECK ===
-  // Lernaufgabe: höhere kognitive Prozesse, komplexere Wissensarten
+  // Lernaufgabe: breiter gefasst - Lernen findet auf allen Stufen statt
   {
     taskTypeId: 'lernaufgabe',
     conditions: [
-      { dimensionId: 'kognitiverProzess', acceptedValues: [1, 2, 3], weight: 1 },
-      { dimensionId: 'wissensart', acceptedValues: [1, 2, 3], weight: 0.5 },
+      { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1, 2, 3], weight: 0.5 },
+      { dimensionId: 'wissensart', acceptedValues: [0, 1, 2, 3], weight: 0.3 },
+      { dimensionId: 'offenheit', acceptedValues: [1, 2], weight: 0.7 },
     ],
   },
-  // Leistungsaufgabe: Reproduktion, Fakten-orientiert
+  // Leistungsaufgabe: auch auf allen kognitiven Stufen möglich (QV verlangt Transfer)
   {
     taskTypeId: 'leistungsaufgabe',
     conditions: [
-      { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1], weight: 1 },
-      { dimensionId: 'wissensart', acceptedValues: [0, 1], weight: 0.5 },
+      { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1, 2, 3], weight: 0.5 },
+      { dimensionId: 'wissensart', acceptedValues: [0, 1, 2, 3], weight: 0.3 },
+      { dimensionId: 'offenheit', acceptedValues: [0, 1], weight: 0.7 },
     ],
   },
 
@@ -38,22 +40,22 @@ export const rules: Rule[] = [
       { dimensionId: 'wissenseinheiten', acceptedValues: [0, 1], weight: 0.4 },
     ],
   },
-  // Trainieren: naher Transfer
+  // Trainieren: Reproduktion UND naher Transfer (Repetition + Übung)
   {
     taskTypeId: 'trainieren',
     conditions: [
-      { dimensionId: 'kognitiverProzess', acceptedValues: [1], weight: 1 },
+      { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1], weight: 1 },
       { dimensionId: 'wissensart', acceptedValues: [0, 1, 2], weight: 0.5 },
       { dimensionId: 'wissenseinheiten', acceptedValues: [0, 1], weight: 0.4 },
     ],
   },
-  // Anwenden: weiter Transfer / Problemlösen
+  // Anwenden: weiter Transfer / Problemlösen, starker Lebensweltbezug im BKU
   {
     taskTypeId: 'anwenden',
     conditions: [
       { dimensionId: 'kognitiverProzess', acceptedValues: [2, 3], weight: 1 },
       { dimensionId: 'wissensart', acceptedValues: [2, 3], weight: 0.8 },
-      { dimensionId: 'lebensweltbezug', acceptedValues: [1, 2, 3], weight: 0.5 },
+      { dimensionId: 'lebensweltbezug', acceptedValues: [1, 2, 3], weight: 0.7 },
     ],
   },
 
@@ -106,26 +108,30 @@ export const rules: Rule[] = [
   },
 
   // === OFFENHEIT (direkte Zuordnung) ===
+  // Geschlossene Aufgabe: auch Sprache berücksichtigen (geringe Sprachkompetenz → geschlossen)
   {
     taskTypeId: 'geschlossen',
     conditions: [
       { dimensionId: 'offenheit', acceptedValues: [0], weight: 1 },
+      { dimensionId: 'sprachlogischeKomplexitaet', acceptedValues: [0, 1], weight: 0.3 },
     ],
   },
+  // Richtig/Falsch: auch bei Konzepten möglich (z.B. "Stimmt diese Aussage zum Ohmschen Gesetz?")
   {
     taskTypeId: 'geschlossen-richtigfalsch',
     conditions: [
       { dimensionId: 'offenheit', acceptedValues: [0], weight: 1 },
-      { dimensionId: 'kognitiverProzess', acceptedValues: [0], weight: 0.6 },
-      { dimensionId: 'wissensart', acceptedValues: [0], weight: 0.4 },
+      { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1], weight: 0.5 },
+      { dimensionId: 'wissensart', acceptedValues: [0, 1, 2], weight: 0.4 },
     ],
   },
+  // Umordnung: auch bei Fakten möglich (chronologische Reihenfolge)
   {
     taskTypeId: 'geschlossen-umordnung',
     conditions: [
       { dimensionId: 'offenheit', acceptedValues: [0], weight: 1 },
       { dimensionId: 'kognitiverProzess', acceptedValues: [0, 1], weight: 0.5 },
-      { dimensionId: 'wissensart', acceptedValues: [1], weight: 0.5 },
+      { dimensionId: 'wissensart', acceptedValues: [0, 1], weight: 0.5 },
     ],
   },
   {
@@ -144,10 +150,12 @@ export const rules: Rule[] = [
       { dimensionId: 'wissensart', acceptedValues: [0, 1], weight: 0.4 },
     ],
   },
+  // Offene Aufgabe: bei hoher Sprachkompetenz bevorzugt
   {
     taskTypeId: 'offen',
     conditions: [
       { dimensionId: 'offenheit', acceptedValues: [2], weight: 1 },
+      { dimensionId: 'sprachlogischeKomplexitaet', acceptedValues: [1, 2], weight: 0.3 },
     ],
   },
   {
@@ -159,25 +167,27 @@ export const rules: Rule[] = [
   },
 
   // === TRANSFER ===
+  // Schulisch: nur bei komplett fehlendem Lebensweltbezug
   {
     taskTypeId: 'schulischer-kontext',
     conditions: [
-      { dimensionId: 'lebensweltbezug', acceptedValues: [0, 1], weight: 1 },
+      { dimensionId: 'lebensweltbezug', acceptedValues: [0], weight: 1 },
     ],
   },
+  // Lehrbetrieblich: im BKU zählt auch "konstruiert" dazu (eingekleidete Aufgaben)
   {
     taskTypeId: 'betrieblicher-kontext',
     conditions: [
-      { dimensionId: 'lebensweltbezug', acceptedValues: [2, 3], weight: 1 },
+      { dimensionId: 'lebensweltbezug', acceptedValues: [1, 2, 3], weight: 1 },
     ],
   },
 
   // === REPRÄSENTATION ===
+  // Verbal: auch bei hoher Sprachkomplexität (Fachtexte analysieren)
   {
     taskTypeId: 'rep-verbal',
     conditions: [
       { dimensionId: 'repraesentationsformen', acceptedValues: [0], weight: 1 },
-      { dimensionId: 'sprachlogischeKomplexitaet', acceptedValues: [0, 1], weight: 0.4 },
     ],
   },
   {
