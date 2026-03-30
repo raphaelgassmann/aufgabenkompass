@@ -66,7 +66,7 @@ export function ResultPanel({ results }: Props) {
   const resultMap = new Map(results.map((r) => [r.taskTypeId, r]));
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="region" aria-label="Empfohlene Aufgabentypen" aria-live="polite">
       <h2 className="text-lg font-bold text-gray-800">Empfohlene Aufgabentypen</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -97,7 +97,6 @@ export function ResultPanel({ results }: Props) {
                   : 'bg-gray-50 border-gray-100'
               }`}
             >
-              {/* Category header */}
               <div className="flex items-center gap-2 mb-3">
                 <div className={`w-2.5 h-2.5 rounded-full ${style.dot}`} />
                 <h3
@@ -109,7 +108,6 @@ export function ResultPanel({ results }: Props) {
                 </h3>
               </div>
 
-              {/* Matched items */}
               <div className="flex flex-wrap gap-2">
                 {matchedTop.map((t) => {
                   const score = resultMap.get(t.id)?.score ?? 0;
@@ -128,15 +126,16 @@ export function ResultPanel({ results }: Props) {
                           {pct}%
                         </span>
                       </span>
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
+                      <div
+                        role="tooltip"
+                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20"
+                      >
                         {t.description}
                       </div>
                     </div>
                   );
                 })}
 
-                {/* Matched sub-items */}
                 {matchedSub.map((t) => {
                   const score = resultMap.get(t.id)?.score ?? 0;
                   const pct = Math.round(score * 100);
@@ -152,7 +151,10 @@ export function ResultPanel({ results }: Props) {
                         <span className="relative">{t.label}</span>
                         <span className="relative opacity-60">{pct}%</span>
                       </span>
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
+                      <div
+                        role="tooltip"
+                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20"
+                      >
                         {t.description}
                       </div>
                     </div>
@@ -160,7 +162,6 @@ export function ResultPanel({ results }: Props) {
                 })}
               </div>
 
-              {/* Unmatched items - compact */}
               {unmatchedTop.length > 0 && (
                 <div className="mt-2.5 pt-2 border-t border-gray-200/50">
                   <div className="flex flex-wrap gap-x-2 gap-y-0.5">
