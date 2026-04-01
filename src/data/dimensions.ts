@@ -31,9 +31,9 @@ export const dimensions: DimensionDef[] = [
     rightLabel: 'Komplexität',
     description: 'Wie viele Wissensbausteine müssen gleichzeitig verarbeitet werden? Basiert auf der Cognitive Load Theory (Sweller). Mehr Einheiten bedeuten höhere kognitive Belastung und Komplexität.',
     stops: [
-      { value: 0, label: 'eine WE' },
-      { value: 1, label: 'bis zu vier WE' },
-      { value: 2, label: 'mehr als vier WE' },
+      { value: 0, label: 'eine WE/Chunk' },
+      { value: 1, label: '≤ vier WE/Chunks' },
+      { value: 2, label: '≥ vier WE/Chunks' },
     ],
   },
   {
